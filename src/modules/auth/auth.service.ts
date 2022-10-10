@@ -17,6 +17,10 @@ export class AuthService {
   ) {}
 
   async signin(payload: CreateUserDto) {
+    // TODO: add input validator
+    if (!payload.email || !payload.password || !payload.name)
+      throw new BadRequestException('Invalid input');
+
     if (await this.userService.findByEmail(payload.email)) {
       throw new ConflictException('Email used');
     }
