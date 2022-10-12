@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './user.chema';
-import { CreateUserDto } from './user.dto';
+import { CreateUserDto, PredictDto } from './user.dto';
 
 @Injectable({})
 export class UserService {
@@ -15,5 +15,101 @@ export class UserService {
 
   async findByEmail(email: string): Promise<UserDocument> {
     return this.userModel.findOne({ email }).exec();
+  }
+
+  parsePredictParam(input: PredictDto) {
+    return {
+      Pregnancies: input.Pregnancies || 0,
+      Insulin: input.Insulin || 0,
+      BMI: input.BMI || 0,
+      Age: input.Age || 0,
+      Glucose: input.Glucose || 0,
+      BloodPressure: input.BloodPressure || 0,
+      DiabetesPedigreeFunction: input.DiabetesPedigreeFunction || 0,
+      SkinThickness: input.SkinThickness || 0,
+    };
+  }
+  async predict(input: PredictDto): Promise<boolean> {
+    const {
+      Pregnancies,
+      Insulin,
+      BMI,
+      Age,
+      Glucose,
+      BloodPressure,
+      DiabetesPedigreeFunction,
+      SkinThickness,
+    } = this.parsePredictParam(input);
+
+    if (
+      Pregnancies +
+        Insulin +
+        BMI +
+        Age +
+        Glucose +
+        BloodPressure +
+        DiabetesPedigreeFunction +
+        SkinThickness <=
+      0
+    )
+      throw new BadRequestException('Invalid input');
+
+    let outcome: number = 0;
+
+    if (Glucose <= 154.5 && BMI > 26.35 && Age <= 28.5 && BloodPressure > 37.0)
+      outcome = 0;
+    if (Glucose <= 154.5 && BMI > 26.35 && Age > 28.5 && Insulin <= 109.0)
+      outcome = 0;
+    if (Glucose <= 154.5 && BMI <= 26.35 && DiabetesPedigreeFunction <= 0.675)
+      outcome = 0;
+    if (
+      Glucose > 154.5 &&
+      BMI > 23.1 &&
+      BloodPressure <= 93.0 &&
+      Glucose > 165.5
+    )
+      outcome = 1;
+    if (Glucose <= 154.5 && BMI > 26.35 && Age > 28.5 && Insulin > 109.0)
+      outcome = 1;
+    if (
+      Glucose > 154.5 &&
+      BMI > 23.1 &&
+      BloodPressure <= 93.0 &&
+      Glucose <= 165.5
+    )
+      outcome = 1;
+    if (
+      Glucose <= 154.5 &&
+      BMI <= 26.35 &&
+      DiabetesPedigreeFunction > 0.675 &&
+      DiabetesPedigreeFunction > 0.706
+    )
+      outcome = 0;
+    if (Glucose <= 154.5 && BMI > 26.35 && Age <= 28.5 && BloodPressure <= 37.0)
+      outcome = 1;
+    if (
+      Glucose > 154.5 &&
+      BMI > 23.1 &&
+      BloodPressure > 93.0 &&
+      Pregnancies > 2.0
+    )
+      outcome = 0;
+    if (Glucose > 154.5 && BMI <= 23.1) outcome = 0;
+    if (
+      Glucose > 154.5 &&
+      BMI > 23.1 &&
+      BloodPressure > 93.0 &&
+      Pregnancies <= 2.0
+    )
+      outcome = 1;
+    if (
+      Glucose <= 154.5 &&
+      BMI <= 26.35 &&
+      DiabetesPedigreeFunction > 0.675 &&
+      DiabetesPedigreeFunction <= 0.706
+    )
+      outcome = 1;
+
+    return outcome === 1;
   }
 }

@@ -1,0 +1,34 @@
+|--- Glucose <= 154.50
+|   |--- BMI <= 26.35
+|   |   |--- DiabetesPedigreeFunction <= 0.68
+|   |   |   |--- class: 0
+|   |   |--- DiabetesPedigreeFunction >  0.68
+|   |   |   |--- DiabetesPedigreeFunction <= 0.71
+|   |   |   |   |--- class: 1
+|   |   |   |--- DiabetesPedigreeFunction >  0.71
+|   |   |   |   |--- class: 0
+|   |--- BMI >  26.35
+|   |   |--- Age <= 28.50
+|   |   |   |--- BloodPressure <= 37.00
+|   |   |   |   |--- class: 1
+|   |   |   |--- BloodPressure >  37.00
+|   |   |   |   |--- class: 0
+|   |   |--- Age >  28.50
+|   |   |   |--- Insulin <= 109.00
+|   |   |   |   |--- class: 0
+|   |   |   |--- Insulin >  109.00
+|   |   |   |   |--- class: 1
+|--- Glucose >  154.50
+|   |--- BMI <= 23.10
+|   |   |--- class: 0
+|   |--- BMI >  23.10
+|   |   |--- BloodPressure <= 93.00
+|   |   |   |--- Glucose <= 165.50
+|   |   |   |   |--- class: 1
+|   |   |   |--- Glucose >  165.50
+|   |   |   |   |--- class: 1
+|   |   |--- BloodPressure >  93.00
+|   |   |   |--- Pregnancies <= 2.00
+|   |   |   |   |--- class: 1
+|   |   |   |--- Pregnancies >  2.00
+|   |   |   |   |--- class: 0
