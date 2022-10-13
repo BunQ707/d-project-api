@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import Decimal from 'decimal.js';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './user.chema';
 import { CreateUserDto, PredictDto } from './user.dto';
@@ -18,10 +19,15 @@ export class UserService {
   }
 
   parsePredictParam(input: PredictDto) {
+    const BMI = new Decimal(input.Weight || 0)
+      .div(new Decimal(input.Height || 0).div(100).pow(2))
+      .toDecimalPlaces(2, Decimal.ROUND_DOWN)
+      .toNumber();
+
     return {
       Pregnancies: input.Pregnancies || 0,
       Insulin: input.Insulin || 0,
-      BMI: input.BMI || 0,
+      BMI: BMI || 0,
       Age: input.Age || 0,
       Glucose: input.Glucose || 0,
       BloodPressure: input.BloodPressure || 0,

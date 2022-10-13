@@ -17,7 +17,11 @@ export class PredictDto {
 
   @ApiProperty({ type: Number, example: 0 })
   @IsNumber()
-  BMI: number;
+  Height: number;
+
+  @ApiProperty({ type: Number, example: 0 })
+  @IsNumber()
+  Weight: number;
 
   @ApiProperty({ type: Number, example: 0 })
   @IsNumber()
