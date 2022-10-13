@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import JwtAccessGuard from 'src/guards/jwt-access.guard';
 import { CreateUserDto } from '../user/user.dto';
@@ -27,7 +34,7 @@ export class AuthController {
   @Get('test-auth')
   @ApiBearerAuth()
   @UseGuards(JwtAccessGuard)
-  async testAuth() {
-    return 'this text is protected';
+  async testAuth(@Request() req) {
+    return req.user;
   }
 }

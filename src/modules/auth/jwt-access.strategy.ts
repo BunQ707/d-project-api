@@ -2,6 +2,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { envConfig } from 'src/configs/env.config';
+import { JwtUser } from 'src/shared/interfaces';
 
 const { JWT_SECRET } = envConfig;
 
@@ -18,7 +19,7 @@ export default class JwtAccessStrategy extends PassportStrategy(
     });
   }
 
-  async validate(payload: any) {
-    return { userId: payload._id, email: payload.email };
+  async validate(payload: JwtUser) {
+    return payload;
   }
 }
