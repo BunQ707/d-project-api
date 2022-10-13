@@ -14,8 +14,24 @@ export class UserService {
     return createdCat.save();
   }
 
-  async findByEmail(email: string): Promise<UserDocument> {
-    return this.userModel.findOne({ email }).exec();
+  async findByEmail(
+    email: string,
+    ignorePassword?: boolean,
+  ): Promise<UserDocument> {
+    return this.userModel
+      .findOne({ email })
+      .select(ignorePassword ? '-password' : '')
+      .exec();
+  }
+
+  async findById(
+    userId: string,
+    ignorePassword?: boolean,
+  ): Promise<UserDocument> {
+    return this.userModel
+      .findOne({ _id: userId })
+      .select(ignorePassword ? '-password' : '')
+      .exec();
   }
 
   parsePredictParam(input: PredictDto) {
