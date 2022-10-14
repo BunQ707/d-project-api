@@ -34,11 +34,15 @@ export class UserService {
       .exec();
   }
 
-  parsePredictParam(input: PredictDto) {
-    const BMI = new Decimal(input.Weight || 0)
-      .div(new Decimal(input.Height || 0).div(100).pow(2))
+  calculateBMI(weightInKg: number, heightInCm: number) {
+    return new Decimal(weightInKg || 0)
+      .div(new Decimal(heightInCm || 0).div(100).pow(2))
       .toDecimalPlaces(2, Decimal.ROUND_DOWN)
       .toNumber();
+  }
+
+  parsePredictParam(input: PredictDto) {
+    const BMI = this.calculateBMI(input.Weight, input.Height);
 
     return {
       Pregnancies: input.Pregnancies || 0,
@@ -51,6 +55,7 @@ export class UserService {
       SkinThickness: input.SkinThickness || 0,
     };
   }
+
   async predict(input: PredictDto): Promise<boolean> {
     const {
       Pregnancies,
