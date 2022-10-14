@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import Decimal from 'decimal.js';
 import { Model } from 'mongoose';
+import { calculateBMI } from 'src/shared/helper';
 import { User, UserDocument } from './user.chema';
 import { CreateUserDto, PredictDto } from './user.dto';
 
@@ -34,15 +35,8 @@ export class UserService {
       .exec();
   }
 
-  calculateBMI(weightInKg: number, heightInCm: number) {
-    return new Decimal(weightInKg || 0)
-      .div(new Decimal(heightInCm || 0).div(100).pow(2))
-      .toDecimalPlaces(2, Decimal.ROUND_DOWN)
-      .toNumber();
-  }
-
   parsePredictParam(input: PredictDto) {
-    const BMI = this.calculateBMI(input.Weight, input.Height);
+    const BMI = calculateBMI(input.Weight, input.Height);
 
     return {
       Pregnancies: input.Pregnancies || 0,
