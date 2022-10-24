@@ -40,7 +40,7 @@ export class AuthService {
 
     const accessToken = this.jwtService.sign(jwtPayload);
 
-    return { 'access-token': accessToken };
+    return { accessToken: accessToken };
   }
 
   async validateUser(email: string, password: string): Promise<any> {
