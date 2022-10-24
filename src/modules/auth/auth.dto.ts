@@ -14,8 +14,8 @@ export class LoginDto {
 }
 
 export class SigninDto extends LoginDto {
-  @ApiProperty({ type: String })
-  @IsNotEmpty()
-  @IsString()
-  name: string;
+  // @ApiProperty({ type: String })
+  // @IsNotEmpty()
+  // @IsString()
+  // name: string;
 }

@@ -18,7 +18,8 @@ export class AuthService {
 
   async signin(payload: CreateUserDto) {
     // TODO: add input validator
-    if (!payload.email || !payload.password || !payload.name)
+    // if (!payload.email || !payload.password || !payload.name)
+    if (!payload.email || !payload.password)
       throw new BadRequestException('Invalid input');
 
     if (await this.userService.findByEmail(payload.email)) {
@@ -50,7 +51,7 @@ export class AuthService {
         const result = {
           _id: user._id,
           email: user.email,
-          name: user.name,
+          // name: user.name,
         };
         return result;
       }
