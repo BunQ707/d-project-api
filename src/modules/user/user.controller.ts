@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -33,5 +34,16 @@ export class UserController {
   @ApiBearerAuth()
   async getProfile(@Request() req) {
     return this.userService.findById(req.user._id, true);
+  }
+
+  @Put('profile')
+  @ApiOperation({
+    operationId: 'updateProfile',
+    summary: 'update your profile',
+  })
+  @UseGuards(JwtAccessGuard)
+  @ApiBearerAuth()
+  async updateProfile(@Request() req, @Body() dto: any) {
+    return this.userService.updateProfile(req.user._id, dto);
   }
 }

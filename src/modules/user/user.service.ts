@@ -47,10 +47,12 @@ export class UserService {
       BloodPressure: input.BloodPressure || 0,
       DiabetesPedigreeFunction: input.DiabetesPedigreeFunction || 0,
       SkinThickness: input.SkinThickness || 0,
+      Weight: input.Weight || 0,
+      Height: input.Height || 0,
     };
   }
 
-  async predict(input: PredictDto): Promise<boolean> {
+  async predict(input: PredictDto) {
     const {
       Pregnancies,
       Insulin,
@@ -60,20 +62,22 @@ export class UserService {
       BloodPressure,
       DiabetesPedigreeFunction,
       SkinThickness,
+      Weight,
+      Height,
     } = this.parsePredictParam(input);
 
-    if (
-      Pregnancies +
-        Insulin +
-        BMI +
-        Age +
-        Glucose +
-        BloodPressure +
-        DiabetesPedigreeFunction +
-        SkinThickness <=
-      0
-    )
-      throw new BadRequestException('Invalid input');
+    // if (
+    //   Pregnancies +
+    //     Insulin +
+    //     BMI +
+    //     Age +
+    //     Glucose +
+    //     BloodPressure +
+    //     DiabetesPedigreeFunction +
+    //     SkinThickness <=
+    //   0
+    // )
+    //   throw new BadRequestException('You should input at least 1 field');
 
     let outcome: number = 0;
 
@@ -131,6 +135,37 @@ export class UserService {
     )
       outcome = 1;
 
-    return outcome === 1;
+    return {
+      Pregnancies,
+      Insulin,
+      BMI,
+      Age,
+      Glucose,
+      BloodPressure,
+      DiabetesPedigreeFunction,
+      SkinThickness,
+      Weight,
+      Height,
+      prediction: outcome === 1,
+    };
+  }
+
+  async updateProfile(userId: string, dto: any) {
+    const predictionRes = await this.predict(dto);
+
+    const targetUser = await this.findById(userId);
+
+    const updated = await this.userModel.findByIdAndUpdate(
+      userId,
+      {
+        profile: {
+          ...targetUser?.profile?.toJSON(),
+          ...predictionRes,
+        },
+      },
+      { new: true },
+    );
+
+    return updated;
   }
 }
