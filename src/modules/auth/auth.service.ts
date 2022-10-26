@@ -58,7 +58,6 @@ export class AuthService {
       user = await this.userService.findByEmail(email);
     }
 
-    console.log(user);
     if (user) {
       const isMatch = await bcrypt.compare(password, user.password);
       if (isMatch) {
