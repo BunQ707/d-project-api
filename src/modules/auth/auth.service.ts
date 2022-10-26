@@ -2,12 +2,14 @@ import {
   BadRequestException,
   Injectable,
   ConflictException,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from '../user/user.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { LoginDto } from './auth.dto';
+import { UserDocument } from '../user/user.chema';
 
 @Injectable({})
 export class AuthService {
@@ -43,8 +45,19 @@ export class AuthService {
     return { accessToken: accessToken };
   }
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userService.findByEmail(email);
+  async validateUser(
+    email: string,
+    password: string,
+    userId?: string,
+  ): Promise<any> {
+    let user: UserDocument;
+
+    if (userId?.length > 0) {
+      user = await this.userService.findById(userId);
+    } else {
+      user = await this.userService.findByEmail(email);
+    }
+
     if (user) {
       const isMatch = await bcrypt.compare(password, user.password);
       if (isMatch) {
@@ -58,5 +71,23 @@ export class AuthService {
       return null;
     }
     return null;
+  }
+
+  async changePassword(
+    userId: string,
+    currentPassword: string,
+    newPassword: string,
+  ): Promise<any> {
+    const validateRes = await this.validateUser('', currentPassword, userId);
+    if (validateRes === null)
+      throw new BadRequestException('Invalid user or password');
+
+    const salt = await bcrypt.genSalt();
+    const encodedPasswrod = await bcrypt.hash(newPassword, salt);
+
+    const res = await this.userService.changePassword(userId, encodedPasswrod);
+
+    if (res?._id) return 'ok';
+    else return 'notok';
   }
 }
