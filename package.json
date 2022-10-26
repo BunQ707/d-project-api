@@ -34,6 +34,8 @@
     "class-validator": "^0.13.2",
     "decimal.js": "^10.4.2",
     "dotenv": "^16.0.3",
+    "es6-fuzz": "^4.0.1",
+    "fuzzylogic": "^0.3.5",
     "mongoose": "^6.6.5",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",

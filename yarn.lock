@@ -1621,6 +1621,11 @@ body-parser@1.20.0:
     type-is "~1.6.18"
     unpipe "1.0.0"
 
+boon-js@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/boon-js/-/boon-js-2.0.3.tgz#8ebfaf219908b9d9259d050ac9de079ebbd7d4b7"
+  integrity sha512-xcLS25RHhH/Bl+toajfOnTzynzWOJSRYG0m2W/8RePZ2xqPPblYmKgd/nZWbA4U7PQ2ohq49YxIWhsUJWvGwXQ==
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
@@ -2173,6 +2178,13 @@ es-module-lexer@^0.9.0:
   resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.9.3.tgz#6f13db00cc38417137daf74366f535c8eb438f19"
   integrity sha512-1HQ2M2sPtxwnvOvT1ZClHyQDiggdNjURWpY2we6aMKCQiUVxTmVs2UYPLIrD84sS+kMdUwfBSylbJPwNnBrnHQ==
 
+es6-fuzz@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/es6-fuzz/-/es6-fuzz-4.0.1.tgz#9fe2a2fbe927a08f6d5fd0847a56255ffde95a73"
+  integrity sha512-p3UT2iXYb3uIXjWTxwjj1XgowvVf4OVvS6qVd7ZUAOOh6jqQz1QAqt2fQ/+/xzjxvn1uEj4LF843hUo6kIr0MA==
+  dependencies:
+    boon-js "2.0.3"
+
 escalade@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
@@ -2628,6 +2640,11 @@ function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
+
+fuzzylogic@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/fuzzylogic/-/fuzzylogic-0.3.5.tgz#8b51ec01274d854ef818af792463593c660ebb1b"
+  integrity sha512-qfnyaes3Gswaw2WoKhqG9vxSiZIdufpbwxiMZ/N+yY06hbaCCsxk90oiWle6Z7FaWJWakt7XKgA444IXG3Jlxw==
 
 gauge@^3.0.0:
   version "3.0.2"
