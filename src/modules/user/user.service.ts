@@ -168,4 +168,14 @@ export class UserService {
 
     return updated;
   }
+
+  async changePassword(userId: string, newPassword: string) {
+    return this.userModel.findByIdAndUpdate(
+      userId,
+      {
+        password: newPassword,
+      },
+      { new: true },
+    );
+  }
 }

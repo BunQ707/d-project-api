@@ -9,7 +9,7 @@ import {
 import { ApiBearerAuth } from '@nestjs/swagger';
 import JwtAccessGuard from 'src/guards/jwt-access.guard';
 import { CreateUserDto } from '../user/user.dto';
-import { LoginDto } from './auth.dto';
+import { LoginDto, NewPasswordDto } from './auth.dto';
 import { AuthService } from './auth.service';
 
 @Controller()
@@ -36,5 +36,16 @@ export class AuthController {
   @UseGuards(JwtAccessGuard)
   async testAuth(@Request() req) {
     return req.user;
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAccessGuard)
+  @Post('change-password')
+  async changePassword(@Request() req, @Body() input: NewPasswordDto) {
+    return this.AuthService.changePassword(
+      req.user._id,
+      input.password,
+      input.newPassword,
+    );
   }
 }

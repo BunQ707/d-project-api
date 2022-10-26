@@ -19,3 +19,15 @@ export class SigninDto extends LoginDto {
   // @IsString()
   // name: string;
 }
+
+export class NewPasswordDto {
+  @ApiProperty({ type: String })
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+
+  @ApiProperty({ type: String })
+  @IsNotEmpty()
+  @IsString()
+  newPassword: string;
+}
