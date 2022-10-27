@@ -11,9 +11,9 @@ export class NutritionDto {
   @IsNumber()
   DiabetesType: number;
 
-  @ApiProperty({ type: Number, example: 0 })
-  @IsNumber()
-  ActivityFactor: number;
+  // @ApiProperty({ type: Number, example: 0 })
+  // @IsNumber()
+  // ActivityFactor: number;
 
   @ApiProperty({ type: Number, example: 0 })
   @IsNumber()
