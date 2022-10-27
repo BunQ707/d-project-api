@@ -151,15 +151,16 @@ export class UserService {
   }
 
   async updateProfile(userId: string, dto: any) {
-    const predictionRes = await this.predict(dto);
-
     const targetUser = await this.findById(userId);
+    const newProfile = { ...targetUser?.profile?.toJSON(), ...dto };
+    const predictionRes = await this.predict(newProfile);
 
     const updated = await this.userModel.findByIdAndUpdate(
       userId,
       {
         profile: {
           ...targetUser?.profile?.toJSON(),
+          ...dto,
           ...predictionRes,
         },
       },
