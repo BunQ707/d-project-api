@@ -16,6 +16,9 @@ export class Profile extends EmbeddedDocument {
   @Prop() DiabetesPedigreeFunction: number;
   @Prop() SkinThickness: number;
   @Prop() prediction: boolean;
+
+  @Prop() Gender: number;
+  @Prop() DiabetesType: number;
 }
 @Schema({ timestamps: true })
 export class User {
