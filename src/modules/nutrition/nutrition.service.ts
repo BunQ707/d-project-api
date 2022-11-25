@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { calculateBMI } from 'src/shared/helper';
 import { NutritionDto } from './nutrition.dto';
 
@@ -69,6 +69,8 @@ export class NutritionService {
     //   input.ActivityFactor || 0,
     // );
     const bmiRes = bmiLogic.defuzzify(BMI || 0);
+    if (bmiRes) {
+    }
 
     let recommendList = [];
 

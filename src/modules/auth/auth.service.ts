@@ -2,7 +2,6 @@ import {
   BadRequestException,
   Injectable,
   ConflictException,
-  NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from '../user/user.dto';
 import { JwtService } from '@nestjs/jwt';

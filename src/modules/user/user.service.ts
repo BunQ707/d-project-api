@@ -1,6 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import Decimal from 'decimal.js';
 import { Model } from 'mongoose';
 import { calculateBMI } from 'src/shared/helper';
 import { User, UserDocument } from './user.chema';

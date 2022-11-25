@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { SigninDto } from '../auth/auth.dto';
 import { IsNumber } from 'class-validator';
 
 export class NutritionDto {
